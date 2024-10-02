@@ -12,13 +12,56 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+          // Informations personnelles
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->string('id_personnel');
+            $table->enum('role',[
+            'admin',           // Administrateur
+            'sub_admin',       // Sous-administrateur
+            'doctor',          // Médecin
+            'nurse',           // Infirmière
+            'lab_technician',  // Technicien de laboratoire
+            'pharmacist',      // Pharmacien
+            'receptionist',    // Réceptionniste
+            'accountant',      // Comptable
+            'patient',         // Patient
+            'surgeon',         // Chirurgien
+            'specialist',      // Spécialiste (Cardiologue, etc.)
+            'cleaner',         // Agent d’entretien
+            'security',        // Sécurité
+            'stagiaire', 
+        ]);
+            $table->string('name'); // Nom du docteur
+            $table->string('last_name')->nullable(); // Prénom du docteur
+            $table->string('email')->unique(); // Adresse e-mail du docteur
+            $table->timestamp('email_verified_at')->nullable(); // Date de vérification de l'adresse e-mail
+            $table->string('password'); // Mot de passe du docteur
+            $table->enum('gender',['male','female','other'])->nullable(); // Genre ['male','female','other']
+            $table->date('birth_date')->nullable(); // Date de naissance du docteur
+            $table->enum('marital_status',['marié','celibataire'])->nullable(); // situation familiale ['marier','celibataire']
+            $table->string('nationality')->nullable();  // Nationalité du docteur           
+            // Coordonnées
+            $table->string('phone_number')->nullable(); // Numéro de téléphone du docteur
+            $table->string('address')->nullable(); // Adresse du docteur
+            $table->string('city')->nullable(); // Ville du docteur
+            $table->string('postal_code')->nullable(); // Code postal du docteur
+            $table->string('country')->nullable(); // Pays du docteur
+            $table->timestamps(); // Dates de création et de mise à jour
+        });
+
+        Schema::create('doctors', function (Blueprint $table){
+
+              $table->id();
+              $table->string('specialization')->nullable(); // Pour les docteurs
+              $table->string('license_number')->nullable(); // Numéro de la licence de travail pour les docteurs 
+              $table->integer('years_of_experience')->nullable(); // Années d'expérience pour les docteurs
+              $table->string('department')->nullable(); // Département dans lequel travaille le docteur.
+              $table->string('shift')->nullable(); // Horaire de travail (ex: jour, nuit, rotation).
+              $table->date('hire_date')->nullable(); // Date d'embauche
+              $table->decimal('consultation_fee', 8, 2)->nullable();// Tarif de consultation
+              $table->string('qualification')->nullable();// Des révisions de la dernière année pour  la qualification du docteur. 
+ 
+
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
