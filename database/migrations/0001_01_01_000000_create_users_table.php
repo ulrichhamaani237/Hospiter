@@ -9,10 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+  
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-          // Informations personnelles
+       
+            // Informations personnelles
             $table->id();
             $table->string('id_personnel');
             $table->enum('role',[
@@ -49,21 +51,7 @@ return new class extends Migration
             $table->timestamps(); // Dates de création et de mise à jour
         });
 
-        Schema::create('doctors', function (Blueprint $table){
-
-              $table->id();
-              $table->string('specialization')->nullable(); // Pour les docteurs
-              $table->string('license_number')->nullable(); // Numéro de la licence de travail pour les docteurs 
-              $table->integer('years_of_experience')->nullable(); // Années d'expérience pour les docteurs
-              $table->string('department')->nullable(); // Département dans lequel travaille le docteur.
-              $table->string('shift')->nullable(); // Horaire de travail (ex: jour, nuit, rotation).
-              $table->date('hire_date')->nullable(); // Date d'embauche
-              $table->decimal('consultation_fee', 8, 2)->nullable();// Tarif de consultation
-              $table->string('qualification')->nullable();// Des révisions de la dernière année pour  la qualification du docteur. 
- 
-
-        });
-
+       
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
